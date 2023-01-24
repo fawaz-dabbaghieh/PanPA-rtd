@@ -3,6 +3,6 @@ requires = ["flit_core >=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "lumache"
-authors = [{name = "Graziella", email = "graziella@lumache"}]
-dynamic = ["version", "description"]
+name = "PanPA"
+authors = [{name = "Fawaz Dabbaghie", email = "fawaz@hhu.de"}]
+dynamic = ["1.0.0", "PanPA is a CMD tool for building panproteome graphs and aligning query sequences to panproteome graphs"]

@@ -1,8 +1,8 @@
 """
-Lumache - Python library for cooks and food lovers.
+PanPA - CMD tool for building and aligning panprotome graphs
 """
 
-__version__ = "0.1.0"
+__version__ = "1.0.0"
 
 
 class InvalidKindError(Exception):
@@ -20,4 +20,5 @@ def get_random_ingredients(kind=None):
     :return: The ingredients list.
     :rtype: list[str]
     """
-    return ["shells", "gorgonzola", "parsley"]
+    # return ["shells", "gorgonzola", "parsley"]
+    pass
