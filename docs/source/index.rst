@@ -16,6 +16,8 @@ Installation
 
 **PanPA** is easy to install through the ``setup.py`` script, the only requirement is ``Cython`` and ``Python >= 3.6``. You can install PanPA locally with ``python3 setup.py install --user`` if you do not have root access to the operating system you're working on.
 
+You can also use the ``environment.yml`` file to generate a conda or virtual Python environment and install PanPA there.
+
 
 Contents
 --------
@@ -24,3 +26,4 @@ Contents
 
    subcommands
    full_experiment
+   gaf_format

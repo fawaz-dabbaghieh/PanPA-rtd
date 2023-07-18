@@ -70,21 +70,23 @@ For aligning query sequences to the graphs, you need to give three main inputs t
 
 1- The index that was built with ``build_index`` subcommand
 2- The input graphs that were built from the same set of MSAs that were used for building the index, the set of grpahs which can be a directory, a text file with list, or given directly in the command.
-3- The query sequences in FASTA. If DNA sequences are given, then the user needs to use the flag ``--dna``.
+3- The query sequences in FASTA. If DNA sequences are given, then the user needs to use the flag ``--dna`` which will then run the frameshift aware alignment algorithm on both the forward and reverse complement of each DNA query sequence.
 
 The user can also specify the substitution matrix to use for the alignment, or print a list of possible matrices with ``--sub_matrix_list``. The user can also specify a certain gap score with ``--gap_score``, a cutoff on alignment id with ``--min_id_score``, and can set a limit to how many graphs to align to with ``--seed_limit``.
 This step can be made faster by giving more cores.
+If DNA sequences were aligned to graphs that were build from DNA sequences, then please read about this in the Other Info section.
 
-The output alignment are in GAF format. To learn more about this format please check `here <https://github.com/lh3/gfatools/blob/master/doc/rGFA.md>`_ 
+The output alignment are in GAF format. To learn more about this format please check `here <https://github.com/lh3/gfatools/blob/master/doc/rGFA.md>`_, moreover, the Other Info section has some extra information about the output file.
 
 .. code-block::
 	:caption: align input arguments
 
-	usage: PanPA align [-h] [-g IN_FILES [IN_FILES ...]] [-l IN_LIST] [-d GRAPHS] [--index INDEX] [-r SEQS] [--dna]
-								[-c CORES] [--sub_matrix SUB_MATRIX] [--sub_matrix_list] [-o GAF] [--gap_score GAP_SCORE]
-								[--min_id_score MIN_ID_SCORE] [--seed_limit SEED_LIMIT]
+	usage: PanPA align [-h] [-g IN_FILES [IN_FILES ...]] [-l IN_LIST] [-d GRAPHS] [--index INDEX]
+					   [-r SEQS] [--dna] [-c CORES] [--sub_matrix SUB_MATRIX] [--sub_matrix_list]
+					   [-o GAF] [--gap_score GAP_SCORE] [--min_id_score MIN_ID_SCORE]
+					   [--seed_limit SEED_LIMIT]
 
-	optional arguments:
+	options:
 	  -h, --help			show this help message and exit
 	  -g IN_FILES [IN_FILES ...], --gfa_files IN_FILES [IN_FILES ...]
 							Input GFA graphs, one or more file space-separated
@@ -107,4 +109,37 @@ The output alignment are in GAF format. To learn more about this format please c
 	  --min_id_score MIN_ID_SCORE
 							minimum alignment identity score for the alignment to be outputted, [0,1]
 	  --seed_limit SEED_LIMIT
-							How many graphs can each seed from the query sequence have hits to, default: 3
+							How many graphs can each seed from the query sequence have hits to,
+							default: 3
+
+
+Align to Single Graph
+---------------------
+The user can avoid the extracting seeds step when aligning sequences if the user wants to align to a specific target graph by using the ``align_single`` subcommand.
+
+In this subcommand, the user needs to provide a target graph in GFA format, the graph has to be a DAG (directed and acyclic), and query sequences in FASTA format.
+
+.. code-block::
+	:caption: align to single target
+
+	usage: PanPA align_single [-h] [-g IN_GRAPH] [-r SEQS] [--dna] [-c CORES] [--sub_matrix SUB_MATRIX]
+							  [--sub_matrix_list] [-o GAF] [--gap_score GAP_SCORE]
+							  [--min_id_score MIN_ID_SCORE]
+
+	options:
+	  -h, --help			show this help message and exit
+	  -g IN_GRAPH, --gfa_files IN_GRAPH
+							Input GFA graph to align against
+	  -r SEQS, --seqs SEQS  The input sequences to align in fasta format
+	  --dna				 Give this flag if the query sequences are DNA and not AA
+	  -c CORES, --cores CORES
+							Numbers of cores to use for aligning
+	  --sub_matrix SUB_MATRIX
+							Substitution matrix to use for alignment, default: blosum62
+	  --sub_matrix_list	 When given, a list of possible substitution matrices will be given
+	  -o GAF, --out_gaf GAF
+							Output alignments file path
+	  --gap_score GAP_SCORE
+							The gap score to use for the alignment, default: -3
+	  --min_id_score MIN_ID_SCORE
+							minimum alignment identity score for the alignment to be outputted, [0,1]
